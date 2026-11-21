@@ -1,0 +1,2256 @@
+[
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Rahul Sharma    Age: 45    Gender: Male    MRN: MRN-29762\nCollection Date: 2026-08-11    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nHemoglobin               12.1         12.0 - 16.0       g/dL\nWBC                      12329        4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Rahul Sharma",
+        "age": 45,
+        "gender": "Male",
+        "mrn": "MRN-29762"
+      },
+      "encounter_date": "2026-08-11",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 12.1,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 12329,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-07-08 | Patient: Sunita Gupta (Female, 68y) | ID: MRN-81066\nChief Diagnosis: Type 2 diabetes mellitus without complications (ICD: E11.9)\nRx Medications:\n1. Metformin 500 mg - Once daily with dinner - Route: Oral x 90 days\n2. Pantoprazole 40 mg - Once daily before breakfast - Route: Oral x 14 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Sunita Gupta",
+        "age": 68,
+        "gender": "Female",
+        "mrn": "MRN-81066"
+      },
+      "encounter_date": "2026-07-08",
+      "diagnoses": [
+        {
+          "code": "E11.9",
+          "description": "Type 2 diabetes mellitus without complications",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        },
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Ankit Verma | MRN: MRN-81636 | Age/Sex: 29/Male\nDischarge Date: 2026-02-05\nPrimary Discharge Diagnosis: Gastro-esophageal reflux disease without esophagitis [K21.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: HbA1c was recorded at 4 % (Ref: < 5.7).\nDischarge Medications: Continue Atorvastatin 20 mg Once at bedtime for 90 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Ankit Verma",
+        "age": 29,
+        "gender": "Male",
+        "mrn": "MRN-81636"
+      },
+      "encounter_date": "2026-02-05",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "HbA1c",
+          "value": 4,
+          "unit": "%",
+          "reference_range": "< 5.7",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-05-17 | Patient: Deepika Rao (Female, 40y) | ID: MRN-46842\nChief Diagnosis: Anemia, unspecified (ICD: D64.9)\nRx Medications:\n1. Amlodipine 5 mg - Once daily morning - Route: Oral x 60 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-46842"
+      },
+      "encounter_date": "2026-05-17",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amlodipine",
+          "dosage": "5 mg",
+          "frequency": "Once daily morning",
+          "route": "Oral",
+          "duration": "60 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-03-25 | Patient: Priya Patel (Female, 34y) | ID: MRN-96628\nChief Diagnosis: Acute pharyngitis, unspecified (ICD: J02.9)\nRx Medications:\n1. Amoxicillin 500 mg - Every 8 hours - Route: Oral x 7 days\n2. Azithromycin 250 mg - Once daily - Route: Oral x 5 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-96628"
+      },
+      "encounter_date": "2026-03-25",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        },
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Meera Joshi    Age: 27    Gender: Female    MRN: MRN-40619\nCollection Date: 2026-03-11    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nHemoglobin               15.8         12.0 - 16.0       g/dL\nPlatelets                386555       150,000 - 450,000 /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Meera Joshi",
+        "age": 27,
+        "gender": "Female",
+        "mrn": "MRN-40619"
+      },
+      "encounter_date": "2026-03-11",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 15.8,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Platelets",
+          "value": 386555,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-03-18 | Patient: Meera Joshi (Female, 27y) | ID: MRN-87139\nChief Diagnosis: Gastro-esophageal reflux disease without esophagitis (ICD: K21.9)\nRx Medications:\n1. Azithromycin 250 mg - Once daily - Route: Oral x 5 days\n2. Pantoprazole 40 mg - Once daily before breakfast - Route: Oral x 14 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Meera Joshi",
+        "age": 27,
+        "gender": "Female",
+        "mrn": "MRN-87139"
+      },
+      "encounter_date": "2026-03-18",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        },
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Priya Patel    Age: 34    Gender: Female    MRN: MRN-82512\nCollection Date: 2026-07-10    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nWBC                      12909        4,500 - 11,000    /\u00b5L\nPlatelets                190430       150,000 - 450,000 /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-82512"
+      },
+      "encounter_date": "2026-07-10",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 12909,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        },
+        {
+          "name": "Platelets",
+          "value": 190430,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Priya Patel | MRN: MRN-31805 | Age/Sex: 34/Female\nDischarge Date: 2026-04-24\nPrimary Discharge Diagnosis: Acute pharyngitis, unspecified [J02.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Hemoglobin was recorded at 11.2 g/dL (Ref: 12.0 - 16.0).\nDischarge Medications: Continue Metformin 500 mg Once daily with dinner for 90 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-31805"
+      },
+      "encounter_date": "2026-04-24",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 11.2,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-03-22 | Patient: Meera Joshi (Female, 27y) | ID: MRN-19508\nChief Diagnosis: Type 2 diabetes mellitus without complications (ICD: E11.9)\nRx Medications:\n1. Azithromycin 250 mg - Once daily - Route: Oral x 5 days\n2. Pantoprazole 40 mg - Once daily before breakfast - Route: Oral x 14 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Meera Joshi",
+        "age": 27,
+        "gender": "Female",
+        "mrn": "MRN-19508"
+      },
+      "encounter_date": "2026-03-22",
+      "diagnoses": [
+        {
+          "code": "E11.9",
+          "description": "Type 2 diabetes mellitus without complications",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        },
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-08-17 | Patient: Rahul Sharma (Male, 45y) | ID: MRN-23970\nChief Diagnosis: Gastro-esophageal reflux disease without esophagitis (ICD: K21.9)\nRx Medications:\n1. Atorvastatin 20 mg - Once at bedtime - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Rahul Sharma",
+        "age": 45,
+        "gender": "Male",
+        "mrn": "MRN-23970"
+      },
+      "encounter_date": "2026-08-17",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Deepika Rao | MRN: MRN-19720 | Age/Sex: 40/Female\nDischarge Date: 2026-06-14\nPrimary Discharge Diagnosis: Gastro-esophageal reflux disease without esophagitis [K21.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Serum Creatinine was recorded at 2.2 mg/dL (Ref: 0.7 - 1.3).\nDischarge Medications: Continue Amoxicillin 500 mg Every 8 hours for 7 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-19720"
+      },
+      "encounter_date": "2026-06-14",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Serum Creatinine",
+          "value": 2.2,
+          "unit": "mg/dL",
+          "reference_range": "0.7 - 1.3",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-07-02 | Patient: Ankit Verma (Male, 29y) | ID: MRN-93584\nChief Diagnosis: Essential (primary) hypertension (ICD: I10)\nRx Medications:\n1. Azithromycin 250 mg - Once daily - Route: Oral x 5 days\n2. Atorvastatin 20 mg - Once at bedtime - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Ankit Verma",
+        "age": 29,
+        "gender": "Male",
+        "mrn": "MRN-93584"
+      },
+      "encounter_date": "2026-07-02",
+      "diagnoses": [
+        {
+          "code": "I10",
+          "description": "Essential (primary) hypertension",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-05-23 | Patient: Meera Joshi (Female, 27y) | ID: MRN-41499\nChief Diagnosis: Gastro-esophageal reflux disease without esophagitis (ICD: K21.9)\nRx Medications:\n1. Amoxicillin 500 mg - Every 8 hours - Route: Oral x 7 days\n2. Metformin 500 mg - Once daily with dinner - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Meera Joshi",
+        "age": 27,
+        "gender": "Female",
+        "mrn": "MRN-41499"
+      },
+      "encounter_date": "2026-05-23",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        },
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Vikram Singh | MRN: MRN-69942 | Age/Sex: 61/Male\nDischarge Date: 2026-02-13\nPrimary Discharge Diagnosis: Anemia, unspecified [D64.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Fasting Blood Glucose was recorded at 183.2 mg/dL (Ref: 70 - 99).\nDischarge Medications: Continue Pantoprazole 40 mg Once daily before breakfast for 14 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Vikram Singh",
+        "age": 61,
+        "gender": "Male",
+        "mrn": "MRN-69942"
+      },
+      "encounter_date": "2026-02-13",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Fasting Blood Glucose",
+          "value": 183.2,
+          "unit": "mg/dL",
+          "reference_range": "70 - 99",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Priya Patel | MRN: MRN-85252 | Age/Sex: 34/Female\nDischarge Date: 2026-06-16\nPrimary Discharge Diagnosis: Essential (primary) hypertension [I10]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Serum Creatinine was recorded at 2.9 mg/dL (Ref: 0.7 - 1.3).\nDischarge Medications: Continue Azithromycin 250 mg Once daily for 5 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-85252"
+      },
+      "encounter_date": "2026-06-16",
+      "diagnoses": [
+        {
+          "code": "I10",
+          "description": "Essential (primary) hypertension",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Serum Creatinine",
+          "value": 2.9,
+          "unit": "mg/dL",
+          "reference_range": "0.7 - 1.3",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Ankit Verma | MRN: MRN-83772 | Age/Sex: 29/Male\nDischarge Date: 2026-07-27\nPrimary Discharge Diagnosis: Acute pharyngitis, unspecified [J02.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: WBC was recorded at 4940 /\u00b5L (Ref: 4,500 - 11,000).\nDischarge Medications: Continue Metformin 500 mg Once daily with dinner for 90 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Ankit Verma",
+        "age": 29,
+        "gender": "Male",
+        "mrn": "MRN-83772"
+      },
+      "encounter_date": "2026-07-27",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 4940,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Meera Joshi    Age: 27    Gender: Female    MRN: MRN-80435\nCollection Date: 2026-06-12    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                336713       150,000 - 450,000 /\u00b5L\nHemoglobin               10.9         12.0 - 16.0       g/dL",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Meera Joshi",
+        "age": 27,
+        "gender": "Female",
+        "mrn": "MRN-80435"
+      },
+      "encounter_date": "2026-06-12",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 336713,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 10.9,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "LOW"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Deepika Rao    Age: 40    Gender: Female    MRN: MRN-60181\nCollection Date: 2026-04-03    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                436024       150,000 - 450,000 /\u00b5L\nHemoglobin               12.5         12.0 - 16.0       g/dL",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-60181"
+      },
+      "encounter_date": "2026-04-03",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 436024,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 12.5,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-05-26 | Patient: Meera Joshi (Female, 27y) | ID: MRN-89997\nChief Diagnosis: Gastro-esophageal reflux disease without esophagitis (ICD: K21.9)\nRx Medications:\n1. Metformin 500 mg - Once daily with dinner - Route: Oral x 90 days\n2. Amoxicillin 500 mg - Every 8 hours - Route: Oral x 7 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Meera Joshi",
+        "age": 27,
+        "gender": "Female",
+        "mrn": "MRN-89997"
+      },
+      "encounter_date": "2026-05-26",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        },
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Deepika Rao    Age: 40    Gender: Female    MRN: MRN-37152\nCollection Date: 2026-01-05    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                120337       150,000 - 450,000 /\u00b5L\nWBC                      7903         4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-37152"
+      },
+      "encounter_date": "2026-01-05",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 120337,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 7903,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Priya Patel    Age: 34    Gender: Female    MRN: MRN-86507\nCollection Date: 2026-04-17    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                219214       150,000 - 450,000 /\u00b5L\nHemoglobin               17.7         12.0 - 16.0       g/dL\nWBC                      15827        4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-86507"
+      },
+      "encounter_date": "2026-04-17",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 219214,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 17.7,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 15827,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-01-06 | Patient: Sunita Gupta (Female, 68y) | ID: MRN-16629\nChief Diagnosis: Acute pharyngitis, unspecified (ICD: J02.9)\nRx Medications:\n1. Atorvastatin 20 mg - Once at bedtime - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Sunita Gupta",
+        "age": 68,
+        "gender": "Female",
+        "mrn": "MRN-16629"
+      },
+      "encounter_date": "2026-01-06",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Vikram Singh    Age: 61    Gender: Male    MRN: MRN-37653\nCollection Date: 2026-01-17    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nHemoglobin               16.8         12.0 - 16.0       g/dL\nWBC                      13532        4,500 - 11,000    /\u00b5L\nPlatelets                320570       150,000 - 450,000 /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Vikram Singh",
+        "age": 61,
+        "gender": "Male",
+        "mrn": "MRN-37653"
+      },
+      "encounter_date": "2026-01-17",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 16.8,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 13532,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        },
+        {
+          "name": "Platelets",
+          "value": 320570,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Deepika Rao    Age: 40    Gender: Female    MRN: MRN-37460\nCollection Date: 2026-04-01    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                360043       150,000 - 450,000 /\u00b5L\nHemoglobin               15.3         12.0 - 16.0       g/dL\nWBC                      5677         4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-37460"
+      },
+      "encounter_date": "2026-04-01",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 360043,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 15.3,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 5677,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Rahul Sharma | MRN: MRN-18834 | Age/Sex: 45/Male\nDischarge Date: 2026-02-28\nPrimary Discharge Diagnosis: Type 2 diabetes mellitus without complications [E11.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Hemoglobin was recorded at 13.1 g/dL (Ref: 12.0 - 16.0).\nDischarge Medications: Continue Amlodipine 5 mg Once daily morning for 60 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Rahul Sharma",
+        "age": 45,
+        "gender": "Male",
+        "mrn": "MRN-18834"
+      },
+      "encounter_date": "2026-02-28",
+      "diagnoses": [
+        {
+          "code": "E11.9",
+          "description": "Type 2 diabetes mellitus without complications",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amlodipine",
+          "dosage": "5 mg",
+          "frequency": "Once daily morning",
+          "route": "Oral",
+          "duration": "60 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 13.1,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-01-13 | Patient: Rahul Sharma (Male, 45y) | ID: MRN-25176\nChief Diagnosis: Gastro-esophageal reflux disease without esophagitis (ICD: K21.9)\nRx Medications:\n1. Amoxicillin 500 mg - Every 8 hours - Route: Oral x 7 days\n2. Metformin 500 mg - Once daily with dinner - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Rahul Sharma",
+        "age": 45,
+        "gender": "Male",
+        "mrn": "MRN-25176"
+      },
+      "encounter_date": "2026-01-13",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        },
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Vikram Singh    Age: 61    Gender: Male    MRN: MRN-60639\nCollection Date: 2026-01-19    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                147456       150,000 - 450,000 /\u00b5L\nWBC                      4584         4,500 - 11,000    /\u00b5L\nHemoglobin               11.9         12.0 - 16.0       g/dL",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Vikram Singh",
+        "age": 61,
+        "gender": "Male",
+        "mrn": "MRN-60639"
+      },
+      "encounter_date": "2026-01-19",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 147456,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 4584,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 11.9,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "LOW"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Deepika Rao | MRN: MRN-70694 | Age/Sex: 40/Female\nDischarge Date: 2026-04-11\nPrimary Discharge Diagnosis: Anemia, unspecified [D64.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: HbA1c was recorded at 6 % (Ref: < 5.7).\nDischarge Medications: Continue Pantoprazole 40 mg Once daily before breakfast for 14 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-70694"
+      },
+      "encounter_date": "2026-04-11",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "HbA1c",
+          "value": 6,
+          "unit": "%",
+          "reference_range": "< 5.7",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Sneha Kulkarni | MRN: MRN-61936 | Age/Sex: 52/Female\nDischarge Date: 2026-04-02\nPrimary Discharge Diagnosis: Anemia, unspecified [D64.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Serum Creatinine was recorded at 1.5 mg/dL (Ref: 0.7 - 1.3).\nDischarge Medications: Continue Metformin 500 mg Once daily with dinner for 90 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Sneha Kulkarni",
+        "age": 52,
+        "gender": "Female",
+        "mrn": "MRN-61936"
+      },
+      "encounter_date": "2026-04-02",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Serum Creatinine",
+          "value": 1.5,
+          "unit": "mg/dL",
+          "reference_range": "0.7 - 1.3",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Priya Patel | MRN: MRN-67342 | Age/Sex: 34/Female\nDischarge Date: 2026-03-21\nPrimary Discharge Diagnosis: Essential (primary) hypertension [I10]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: WBC was recorded at 4412 /\u00b5L (Ref: 4,500 - 11,000).\nDischarge Medications: Continue Metformin 500 mg Once daily with dinner for 90 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-67342"
+      },
+      "encounter_date": "2026-03-21",
+      "diagnoses": [
+        {
+          "code": "I10",
+          "description": "Essential (primary) hypertension",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 4412,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Sneha Kulkarni | MRN: MRN-58280 | Age/Sex: 52/Female\nDischarge Date: 2026-03-12\nPrimary Discharge Diagnosis: Gastro-esophageal reflux disease without esophagitis [K21.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Fasting Blood Glucose was recorded at 201.6 mg/dL (Ref: 70 - 99).\nDischarge Medications: Continue Azithromycin 250 mg Once daily for 5 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Sneha Kulkarni",
+        "age": 52,
+        "gender": "Female",
+        "mrn": "MRN-58280"
+      },
+      "encounter_date": "2026-03-12",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Fasting Blood Glucose",
+          "value": 201.6,
+          "unit": "mg/dL",
+          "reference_range": "70 - 99",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Ankit Verma    Age: 29    Gender: Male    MRN: MRN-77861\nCollection Date: 2026-05-08    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                216466       150,000 - 450,000 /\u00b5L\nHemoglobin               15.0         12.0 - 16.0       g/dL\nWBC                      6515         4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Ankit Verma",
+        "age": 29,
+        "gender": "Male",
+        "mrn": "MRN-77861"
+      },
+      "encounter_date": "2026-05-08",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 216466,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 15.0,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 6515,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Ankit Verma    Age: 29    Gender: Male    MRN: MRN-53007\nCollection Date: 2026-02-12    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nHemoglobin               8.9          12.0 - 16.0       g/dL\nPlatelets                347583       150,000 - 450,000 /\u00b5L\nWBC                      10298        4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Ankit Verma",
+        "age": 29,
+        "gender": "Male",
+        "mrn": "MRN-53007"
+      },
+      "encounter_date": "2026-02-12",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 8.9,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "LOW"
+        },
+        {
+          "name": "Platelets",
+          "value": 347583,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 10298,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Rohan Deshmukh    Age: 50    Gender: Male    MRN: MRN-86983\nCollection Date: 2026-04-18    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nWBC                      16659        4,500 - 11,000    /\u00b5L\nHemoglobin               12.9         12.0 - 16.0       g/dL",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Rohan Deshmukh",
+        "age": 50,
+        "gender": "Male",
+        "mrn": "MRN-86983"
+      },
+      "encounter_date": "2026-04-18",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 16659,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 12.9,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-07-30 | Patient: Priya Patel (Female, 34y) | ID: MRN-97821\nChief Diagnosis: Acute pharyngitis, unspecified (ICD: J02.9)\nRx Medications:\n1. Metformin 500 mg - Once daily with dinner - Route: Oral x 90 days\n2. Amlodipine 5 mg - Once daily morning - Route: Oral x 60 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-97821"
+      },
+      "encounter_date": "2026-07-30",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Metformin",
+          "dosage": "500 mg",
+          "frequency": "Once daily with dinner",
+          "route": "Oral",
+          "duration": "90 days"
+        },
+        {
+          "name": "Amlodipine",
+          "dosage": "5 mg",
+          "frequency": "Once daily morning",
+          "route": "Oral",
+          "duration": "60 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Sunita Gupta    Age: 68    Gender: Female    MRN: MRN-75338\nCollection Date: 2026-07-13    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nHemoglobin               13.5         12.0 - 16.0       g/dL\nPlatelets                231010       150,000 - 450,000 /\u00b5L\nWBC                      10178        4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Sunita Gupta",
+        "age": 68,
+        "gender": "Female",
+        "mrn": "MRN-75338"
+      },
+      "encounter_date": "2026-07-13",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 13.5,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Platelets",
+          "value": 231010,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 10178,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-03-24 | Patient: Priya Patel (Female, 34y) | ID: MRN-89730\nChief Diagnosis: Essential (primary) hypertension (ICD: I10)\nRx Medications:\n1. Atorvastatin 20 mg - Once at bedtime - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-89730"
+      },
+      "encounter_date": "2026-03-24",
+      "diagnoses": [
+        {
+          "code": "I10",
+          "description": "Essential (primary) hypertension",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Priya Patel    Age: 34    Gender: Female    MRN: MRN-36941\nCollection Date: 2026-03-26    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nWBC                      13823        4,500 - 11,000    /\u00b5L\nPlatelets                227599       150,000 - 450,000 /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-36941"
+      },
+      "encounter_date": "2026-03-26",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 13823,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        },
+        {
+          "name": "Platelets",
+          "value": 227599,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-04-13 | Patient: Priya Patel (Female, 34y) | ID: MRN-74454\nChief Diagnosis: Type 2 diabetes mellitus without complications (ICD: E11.9)\nRx Medications:\n1. Atorvastatin 20 mg - Once at bedtime - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-74454"
+      },
+      "encounter_date": "2026-04-13",
+      "diagnoses": [
+        {
+          "code": "E11.9",
+          "description": "Type 2 diabetes mellitus without complications",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Rohan Deshmukh | MRN: MRN-72355 | Age/Sex: 50/Male\nDischarge Date: 2026-06-13\nPrimary Discharge Diagnosis: Acute pharyngitis, unspecified [J02.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Platelets was recorded at 169121 /\u00b5L (Ref: 150,000 - 450,000).\nDischarge Medications: Continue Azithromycin 250 mg Once daily for 5 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Rohan Deshmukh",
+        "age": 50,
+        "gender": "Male",
+        "mrn": "MRN-72355"
+      },
+      "encounter_date": "2026-06-13",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 169121,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Vikram Singh | MRN: MRN-74437 | Age/Sex: 61/Male\nDischarge Date: 2026-08-04\nPrimary Discharge Diagnosis: Type 2 diabetes mellitus without complications [E11.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: WBC was recorded at 7923 /\u00b5L (Ref: 4,500 - 11,000).\nDischarge Medications: Continue Atorvastatin 20 mg Once at bedtime for 90 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Vikram Singh",
+        "age": 61,
+        "gender": "Male",
+        "mrn": "MRN-74437"
+      },
+      "encounter_date": "2026-08-04",
+      "diagnoses": [
+        {
+          "code": "E11.9",
+          "description": "Type 2 diabetes mellitus without complications",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 7923,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-01-12 | Patient: Sneha Kulkarni (Female, 52y) | ID: MRN-71835\nChief Diagnosis: Acute pharyngitis, unspecified (ICD: J02.9)\nRx Medications:\n1. Atorvastatin 20 mg - Once at bedtime - Route: Oral x 90 days\n2. Pantoprazole 40 mg - Once daily before breakfast - Route: Oral x 14 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Sneha Kulkarni",
+        "age": 52,
+        "gender": "Female",
+        "mrn": "MRN-71835"
+      },
+      "encounter_date": "2026-01-12",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        },
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Deepika Rao | MRN: MRN-41133 | Age/Sex: 40/Female\nDischarge Date: 2026-06-23\nPrimary Discharge Diagnosis: Gastro-esophageal reflux disease without esophagitis [K21.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Platelets was recorded at 315367 /\u00b5L (Ref: 150,000 - 450,000).\nDischarge Medications: Continue Azithromycin 250 mg Once daily for 5 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-41133"
+      },
+      "encounter_date": "2026-06-23",
+      "diagnoses": [
+        {
+          "code": "K21.9",
+          "description": "Gastro-esophageal reflux disease without esophagitis",
+          "status": "ACTIVE"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 315367,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-02-13 | Patient: Arjun Nair (Male, 38y) | ID: MRN-28198\nChief Diagnosis: Acute pharyngitis, unspecified (ICD: J02.9)\nRx Medications:\n1. Amlodipine 5 mg - Once daily morning - Route: Oral x 60 days\n2. Amoxicillin 500 mg - Every 8 hours - Route: Oral x 7 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Arjun Nair",
+        "age": 38,
+        "gender": "Male",
+        "mrn": "MRN-28198"
+      },
+      "encounter_date": "2026-02-13",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amlodipine",
+          "dosage": "5 mg",
+          "frequency": "Once daily morning",
+          "route": "Oral",
+          "duration": "60 days"
+        },
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Priya Patel | MRN: MRN-13365 | Age/Sex: 34/Female\nDischarge Date: 2026-05-29\nPrimary Discharge Diagnosis: Acute pharyngitis, unspecified [J02.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Serum Creatinine was recorded at 3.5 mg/dL (Ref: 0.7 - 1.3).\nDischarge Medications: Continue Azithromycin 250 mg Once daily for 5 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-13365"
+      },
+      "encounter_date": "2026-05-29",
+      "diagnoses": [
+        {
+          "code": "J02.9",
+          "description": "Acute pharyngitis, unspecified",
+          "status": "RESOLVED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Serum Creatinine",
+          "value": 3.5,
+          "unit": "mg/dL",
+          "reference_range": "0.7 - 1.3",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-07-21 | Patient: Vikram Singh (Male, 61y) | ID: MRN-67779\nChief Diagnosis: Type 2 diabetes mellitus without complications (ICD: E11.9)\nRx Medications:\n1. Pantoprazole 40 mg - Once daily before breakfast - Route: Oral x 14 days\n2. Atorvastatin 20 mg - Once at bedtime - Route: Oral x 90 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Vikram Singh",
+        "age": 61,
+        "gender": "Male",
+        "mrn": "MRN-67779"
+      },
+      "encounter_date": "2026-07-21",
+      "diagnoses": [
+        {
+          "code": "E11.9",
+          "description": "Type 2 diabetes mellitus without complications",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Sneha Kulkarni | MRN: MRN-13280 | Age/Sex: 52/Female\nDischarge Date: 2026-05-01\nPrimary Discharge Diagnosis: Anemia, unspecified [D64.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Platelets was recorded at 399858 /\u00b5L (Ref: 150,000 - 450,000).\nDischarge Medications: Continue Azithromycin 250 mg Once daily for 5 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Sneha Kulkarni",
+        "age": 52,
+        "gender": "Female",
+        "mrn": "MRN-13280"
+      },
+      "encounter_date": "2026-05-01",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 399858,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-06-20 | Patient: Deepika Rao (Female, 40y) | ID: MRN-95054\nChief Diagnosis: Essential (primary) hypertension (ICD: I10)\nRx Medications:\n1. Amoxicillin 500 mg - Every 8 hours - Route: Oral x 7 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-95054"
+      },
+      "encounter_date": "2026-06-20",
+      "diagnoses": [
+        {
+          "code": "I10",
+          "description": "Essential (primary) hypertension",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Sneha Kulkarni | MRN: MRN-12671 | Age/Sex: 52/Female\nDischarge Date: 2026-08-03\nPrimary Discharge Diagnosis: Anemia, unspecified [D64.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: WBC was recorded at 5068 /\u00b5L (Ref: 4,500 - 11,000).\nDischarge Medications: Continue Atorvastatin 20 mg Once at bedtime for 90 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Sneha Kulkarni",
+        "age": 52,
+        "gender": "Female",
+        "mrn": "MRN-12671"
+      },
+      "encounter_date": "2026-08-03",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "20 mg",
+          "frequency": "Once at bedtime",
+          "route": "Oral",
+          "duration": "90 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 5068,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Priya Patel | MRN: MRN-80468 | Age/Sex: 34/Female\nDischarge Date: 2026-01-19\nPrimary Discharge Diagnosis: Essential (primary) hypertension [I10]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Platelets was recorded at 149445 /\u00b5L (Ref: 150,000 - 450,000).\nDischarge Medications: Continue Azithromycin 250 mg Once daily for 5 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-80468"
+      },
+      "encounter_date": "2026-01-19",
+      "diagnoses": [
+        {
+          "code": "I10",
+          "description": "Essential (primary) hypertension",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 149445,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-08-06 | Patient: Vikram Singh (Male, 61y) | ID: MRN-99687\nChief Diagnosis: Anemia, unspecified (ICD: D64.9)\nRx Medications:\n1. Azithromycin 250 mg - Once daily - Route: Oral x 5 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Vikram Singh",
+        "age": 61,
+        "gender": "Male",
+        "mrn": "MRN-99687"
+      },
+      "encounter_date": "2026-08-06",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Azithromycin",
+          "dosage": "250 mg",
+          "frequency": "Once daily",
+          "route": "Oral",
+          "duration": "5 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Sunita Gupta    Age: 68    Gender: Female    MRN: MRN-52245\nCollection Date: 2026-03-10    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nHemoglobin               16.8         12.0 - 16.0       g/dL\nWBC                      6995         4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Sunita Gupta",
+        "age": 68,
+        "gender": "Female",
+        "mrn": "MRN-52245"
+      },
+      "encounter_date": "2026-03-10",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 16.8,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 6995,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Deepika Rao | MRN: MRN-49552 | Age/Sex: 40/Female\nDischarge Date: 2026-03-02\nPrimary Discharge Diagnosis: Essential (primary) hypertension [I10]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: HbA1c was recorded at 7 % (Ref: < 5.7).\nDischarge Medications: Continue Pantoprazole 40 mg Once daily before breakfast for 14 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-49552"
+      },
+      "encounter_date": "2026-03-02",
+      "diagnoses": [
+        {
+          "code": "I10",
+          "description": "Essential (primary) hypertension",
+          "status": "CONFIRMED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Pantoprazole",
+          "dosage": "40 mg",
+          "frequency": "Once daily before breakfast",
+          "route": "Oral",
+          "duration": "14 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "HbA1c",
+          "value": 7,
+          "unit": "%",
+          "reference_range": "< 5.7",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Priya Patel    Age: 34    Gender: Female    MRN: MRN-64387\nCollection Date: 2026-03-12    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                228289       150,000 - 450,000 /\u00b5L\nWBC                      14895        4,500 - 11,000    /\u00b5L\nHemoglobin               11.0         12.0 - 16.0       g/dL",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Priya Patel",
+        "age": 34,
+        "gender": "Female",
+        "mrn": "MRN-64387"
+      },
+      "encounter_date": "2026-03-12",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 228289,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 14895,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 11.0,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "LOW"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Rahul Sharma    Age: 45    Gender: Male    MRN: MRN-32946\nCollection Date: 2026-08-22    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nHemoglobin               15.9         12.0 - 16.0       g/dL\nPlatelets                177680       150,000 - 450,000 /\u00b5L\nWBC                      15271        4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Rahul Sharma",
+        "age": 45,
+        "gender": "Male",
+        "mrn": "MRN-32946"
+      },
+      "encounter_date": "2026-08-22",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Hemoglobin",
+          "value": 15.9,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Platelets",
+          "value": 177680,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 15271,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Sneha Kulkarni    Age: 52    Gender: Female    MRN: MRN-40149\nCollection Date: 2026-03-26    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nPlatelets                368695       150,000 - 450,000 /\u00b5L\nHemoglobin               14.5         12.0 - 16.0       g/dL\nWBC                      14220        4,500 - 11,000    /\u00b5L",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Sneha Kulkarni",
+        "age": 52,
+        "gender": "Female",
+        "mrn": "MRN-40149"
+      },
+      "encounter_date": "2026-03-26",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "Platelets",
+          "value": 368695,
+          "unit": "/\u00b5L",
+          "reference_range": "150,000 - 450,000",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 14.5,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        },
+        {
+          "name": "WBC",
+          "value": 14220,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "MAX SUPER SPECIALITY HOSPITAL - DISCHARGE SUMMARY\nPatient: Sunita Gupta | MRN: MRN-96363 | Age/Sex: 68/Female\nDischarge Date: 2026-01-12\nPrimary Discharge Diagnosis: Anemia, unspecified [D64.9]\nHospital Course: Patient admitted with acute presentation. Stabilized with supportive therapy.\nKey Laboratory at Discharge: Fasting Blood Glucose was recorded at 203.3 mg/dL (Ref: 70 - 99).\nDischarge Medications: Continue Amlodipine 5 mg Once daily morning for 60 days.\nFollow-up: Visit OPD in 14 days.",
+    "output": {
+      "report_type": "DischargeSummary",
+      "patient_info": {
+        "name": "Sunita Gupta",
+        "age": 68,
+        "gender": "Female",
+        "mrn": "MRN-96363"
+      },
+      "encounter_date": "2026-01-12",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amlodipine",
+          "dosage": "5 mg",
+          "frequency": "Once daily morning",
+          "route": "Oral",
+          "duration": "60 days"
+        }
+      ],
+      "lab_results": [
+        {
+          "name": "Fasting Blood Glucose",
+          "value": 203.3,
+          "unit": "mg/dL",
+          "reference_range": "70 - 99",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Patient stabilized and discharged with maintenance regimen."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "METRO LABS & DIAGNOSTICS - CLINICAL REPORT\nPatient: Deepika Rao    Age: 40    Gender: Female    MRN: MRN-63964\nCollection Date: 2026-07-20    Report Type: Complete Blood Count (CBC)\n----------------------------------------------------------------\nTEST NAME                RESULT       REFERENCE RANGE   UNIT\nWBC                      15900        4,500 - 11,000    /\u00b5L\nHemoglobin               15.0         12.0 - 16.0       g/dL",
+    "output": {
+      "report_type": "CBC",
+      "patient_info": {
+        "name": "Deepika Rao",
+        "age": 40,
+        "gender": "Female",
+        "mrn": "MRN-63964"
+      },
+      "encounter_date": "2026-07-20",
+      "diagnoses": [],
+      "medications": [],
+      "lab_results": [
+        {
+          "name": "WBC",
+          "value": 15900,
+          "unit": "/\u00b5L",
+          "reference_range": "4,500 - 11,000",
+          "interpretation": "HIGH"
+        },
+        {
+          "name": "Hemoglobin",
+          "value": 15.0,
+          "unit": "g/dL",
+          "reference_range": "12.0 - 16.0",
+          "interpretation": "NORMAL"
+        }
+      ],
+      "clinical_findings": "Routine CBC panel analysis."
+    }
+  },
+  {
+    "instruction": "Extract structured medical entities and return strictly valid JSON according to MedSecure schema.",
+    "input": "APOLLO CLINIC - OUTPATIENT PRESCRIPTION\nDate: 2026-07-11 | Patient: Rohan Deshmukh (Male, 50y) | ID: MRN-77999\nChief Diagnosis: Anemia, unspecified (ICD: D64.9)\nRx Medications:\n1. Amoxicillin 500 mg - Every 8 hours - Route: Oral x 7 days\nAdvice: Maintain low-sodium diet, regular aerobic exercise, and follow-up in 4 weeks.",
+    "output": {
+      "report_type": "Prescription",
+      "patient_info": {
+        "name": "Rohan Deshmukh",
+        "age": 50,
+        "gender": "Male",
+        "mrn": "MRN-77999"
+      },
+      "encounter_date": "2026-07-11",
+      "diagnoses": [
+        {
+          "code": "D64.9",
+          "description": "Anemia, unspecified",
+          "status": "SUSPECTED"
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amoxicillin",
+          "dosage": "500 mg",
+          "frequency": "Every 8 hours",
+          "route": "Oral",
+          "duration": "7 days"
+        }
+      ],
+      "lab_results": [],
+      "clinical_findings": "Outpatient clinical management and prescription."
+    }
+  }
+]

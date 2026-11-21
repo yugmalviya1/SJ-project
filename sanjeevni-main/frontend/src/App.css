@@ -1,0 +1,131 @@
+/* ─── Editorial Layout & Grid System (bb-b.net Exact Aesthetic) ─── */
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+/* ─── Editorial Two-Column Hero (Exact bb-b.net spacing & balance) ─── */
+.editorial-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 96px;
+  padding: 100px 0 110px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 80px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .editorial-hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 56px 0 64px 0;
+    margin-bottom: 48px;
+  }
+}
+
+.editorial-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.editorial-hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ─── Section Header (bb-b.net style) ─── */
+.section-header {
+  margin-bottom: 44px;
+}
+
+.section-header .section-eyebrow {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.section-header .section-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.section-header .section-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  max-width: 780px;
+}
+
+/* ─── Editorial Split Cards (Inspired by ZONEGREEN / BINDER MAGNETIC in Images 2 & 3) ─── */
+.editorial-case-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-bottom: 60px;
+}
+
+.editorial-split-card {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  background: #060606;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+}
+
+.editorial-split-card:hover {
+  border-color: var(--border-mid);
+}
+
+@media (max-width: 960px) {
+  .editorial-split-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.editorial-card-content {
+  padding: 48px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+
+.editorial-card-visual {
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--border-subtle);
+  padding: 48px;
+  min-height: 280px;
+  position: relative;
+}
+
+@media (max-width: 960px) {
+  .editorial-card-visual {
+    border-left: none;
+    border-top: 1px solid var(--border-subtle);
+  }
+}
