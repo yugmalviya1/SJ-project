@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
+import RoleDashboardView from './components/RoleDashboardView';
+import RoleLoginView from './components/RoleLoginView';
 import PatientEHRView from './components/PatientEHRView';
 import CaseSheetView from './components/CaseSheetView';
 import ConsentSharingView from './components/ConsentSharingView';
@@ -9,41 +11,41 @@ import LedgerExplorerView from './components/LedgerExplorerView';
 import RAGAssistantView from './components/RAGAssistantView';
 import AuditLogView from './components/AuditLogView';
 import './App.css';
-import { ShieldCheck, Ambulance, Link2, BrainCircuit, ArrowRight } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const FALLBACK_USERS = {
   Doctor: {
-    id: 'user-doc-1',
-    username: 'dr_sharma',
-    full_name: 'Dr. Rahul Sharma, MD',
+    id: 'USR-DOC-1',
+    username: 'dr_smith',
+    full_name: 'Dr. Robert Smith, MD',
     role: 'Doctor',
     doctor_id: 'DR-1001',
     hospital_id: 'HOSP-001'
   },
   Patient: {
-    id: 'user-pat-1',
-    username: 'rahul_sharma',
+    id: 'USR-PAT-1',
+    username: 'pat_rahul',
     full_name: 'Rahul Sharma',
     role: 'Patient',
     patient_mrn: 'MRN-1002'
   },
   HospitalAdmin: {
-    id: 'user-adm-1',
-    username: 'admin_metro',
-    full_name: 'Chief Administrator Kapoor',
+    id: 'USR-ADM-1',
+    username: 'admin_sarah',
+    full_name: 'Sarah Jenkins',
     role: 'HospitalAdmin',
     hospital_id: 'HOSP-001'
   },
   Auditor: {
-    id: 'user-aud-1',
-    username: 'auditor_verma',
-    full_name: 'Senior Auditor Verma',
+    id: 'USR-AUD-1',
+    username: 'auditor_alex',
+    full_name: 'Alex Rivera',
     role: 'Auditor'
   },
   PoliceEmergency: {
-    id: 'user-pol-1',
-    username: 'inspector_singh',
-    full_name: 'Inspector Vikram Singh',
+    id: 'USR-POL-1',
+    username: 'officer_kumar',
+    full_name: 'Sub-Inspector Rajesh Kumar',
     role: 'PoliceEmergency',
     police_badge_id: 'POL-DL-8821'
   }
@@ -58,16 +60,19 @@ const DEFAULT_PATIENTS = [
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [user, setUser] = useState(FALLBACK_USERS.Doctor);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const [patients, setPatients] = useState(DEFAULT_PATIENTS);
   const [activeMrn, setActiveMrn] = useState('MRN-1002');
   const [patientDetails, setPatientDetails] = useState(null);
   const [loadingPatient, setLoadingPatient] = useState(false);
   
   const [ledgerBlocks, setLedgerBlocks] = useState([]);
-  const [ledgerHealth, setLedgerHealth] = useState({ chain_integrity_valid: true, total_blocks: 4, status: 'VALID' });
+  const [ledgerHealth, setLedgerHealth] = useState({ chain_integrity_valid: true, total_blocks: 11, status: 'VALID' });
   
   const [auditLogs, setAuditLogs] = useState([]);
-  const [auditSummary, setAuditSummary] = useState({ total: 12, flags: 0 });
+  const [auditSummary, setAuditSummary] = useState({ total: 24, flags: 0 });
   const [ragStatus, setRagStatus] = useState({ indexed_chunks_count: 24, status: 'active' });
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [backendOffline, setBackendOffline] = useState(false);
@@ -142,7 +147,7 @@ export default function App() {
         if (text) {
           const aData = JSON.parse(text);
           setAuditLogs(aData.logs || []);
-          setAuditSummary({ total: aData.total_records || 12, flags: aData.security_flags_count || 0 });
+          setAuditSummary({ total: aData.total_records || 24, flags: aData.security_flags_count || 0 });
         }
       }
 
@@ -177,6 +182,7 @@ export default function App() {
           if (data.access_token) {
             localStorage.setItem('medsecure_token', data.access_token);
             setUser(data.user);
+            setIsLoggedIn(true);
             fetchAllData(data.access_token, data.user);
             setBackendOffline(false);
             return;
@@ -198,13 +204,9 @@ export default function App() {
     setIsRefreshing(true);
     const fallback = FALLBACK_USERS[newRole] || FALLBACK_USERS.Doctor;
     setUser(fallback);
+    setActiveTab('overview');
 
-    if (newRole === 'PoliceEmergency') {
-      setActiveTab('emergency');
-    } else if (newRole === 'Auditor') {
-      setActiveTab('audit');
-    } else if (newRole === 'Patient') {
-      setActiveTab('patients');
+    if (newRole === 'Patient') {
       setActiveMrn('MRN-1002');
     }
 
@@ -222,6 +224,7 @@ export default function App() {
           if (data.access_token) {
             localStorage.setItem('medsecure_token', data.access_token);
             setUser(data.user);
+            setIsLoggedIn(true);
             await fetchAllData(data.access_token, data.user);
             setBackendOffline(false);
           }
@@ -233,6 +236,23 @@ export default function App() {
     } finally {
       setIsRefreshing(false);
     }
+  };
+
+  const handleLoginSuccess = async (userData, roleName) => {
+    setUser(userData);
+    setIsLoggedIn(true);
+    setShowLoginModal(false);
+    setActiveTab('overview');
+    if (roleName === 'Patient') {
+      setActiveMrn(userData.patient_mrn || 'MRN-1002');
+    }
+    await fetchAllData(localStorage.getItem('medsecure_token'), userData);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('medsecure_token');
+    setIsLoggedIn(false);
+    setShowLoginModal(true);
   };
 
   const handleSelectPatient = (mrn) => {
@@ -276,41 +296,50 @@ export default function App() {
     }
   };
 
-  // bb-b.net style clean concise header navigation
+  // Role-Specific Navigation Items
   const getNavItems = () => {
     const role = user?.role;
     if (role === 'PoliceEmergency') {
       return [
-        { id: 'overview', label: 'Overview' },
-        { id: 'emergency', label: 'Incident Dossier' },
-        { id: 'audit', label: 'Audit Trail' }
+        { id: 'overview', label: 'Incident Dashboard' },
+        { id: 'emergency', label: 'Accident Dossier' },
+        { id: 'audit', label: 'Chain of Custody' }
       ];
     }
     if (role === 'Auditor') {
       return [
-        { id: 'overview', label: 'Overview' },
-        { id: 'audit', label: 'Audit Logs' },
-        { id: 'ledger', label: 'Ledger' },
+        { id: 'overview', label: 'Auditor Dashboard' },
+        { id: 'ledger', label: 'Ledger Chain' },
+        { id: 'audit', label: 'Forensic Logs' },
         { id: 'emergency', label: 'Emergency Events' }
       ];
     }
     if (role === 'Patient') {
       return [
-        { id: 'overview', label: 'Overview' },
+        { id: 'overview', label: 'My Dashboard' },
         { id: 'patients', label: 'My Health' },
-        { id: 'consent', label: 'Consent' },
-        { id: 'rag', label: 'Assistant' },
+        { id: 'consent', label: 'Consent & Sharing' },
+        { id: 'rag', label: 'My Assistant' },
         { id: 'audit', label: 'Access History' }
       ];
     }
-    // Doctor / HospitalAdmin
+    if (role === 'HospitalAdmin') {
+      return [
+        { id: 'overview', label: 'Admin Dashboard' },
+        { id: 'patients', label: 'Patient Registry' },
+        { id: 'consent', label: 'Consent Governance' },
+        { id: 'ledger', label: 'Ledger Health' },
+        { id: 'audit', label: 'Compliance Audit' }
+      ];
+    }
+    // Doctor
     return [
-      { id: 'overview', label: 'Overview' },
-      { id: 'patients', label: 'Patients' },
+      { id: 'overview', label: 'Clinical Dashboard' },
+      { id: 'patients', label: 'Patient Records' },
       { id: 'case_sheet', label: 'Case Sheet' },
-      { id: 'consent', label: 'Consent' },
-      { id: 'emergency', label: 'Emergency' },
       { id: 'extract', label: 'AI Review' },
+      { id: 'emergency', label: 'Emergency' },
+      { id: 'consent', label: 'Consent' },
       { id: 'rag', label: 'Assistant' },
       { id: 'ledger', label: 'Ledger' },
       { id: 'audit', label: 'Audit' },
@@ -322,7 +351,7 @@ export default function App() {
   return (
     <div className="container" style={{ minHeight: '100vh', paddingBottom: '90px' }}>
       
-      {/* ─── Integrated Clean Navbar (bb-b.net Exact Layout) ─── */}
+      {/* ─── Integrated Clean Navbar ─── */}
       <Header
         user={user}
         onSwitchRole={handleSwitchRole}
@@ -333,234 +362,154 @@ export default function App() {
         activeTab={activeTab}
         onNavigateTab={(tab) => setActiveTab(tab)}
         navItems={navItems}
+        isLoggedIn={isLoggedIn}
+        onLogout={handleLogout}
+        onOpenLogin={() => setShowLoginModal(true)}
       />
 
-      {/* ─── Main View Content ─── */}
-      <main className="animate-fade-in" key={activeTab} style={{ marginTop: '20px' }}>
-        
-        {/* ─── OVERVIEW TAB (bb-b.net Showcase Page) ─── */}
-        {activeTab === 'overview' && (
-          <div>
-            {/* 1. bb-b.net Style Two-Column Editorial Hero */}
-            <section className="editorial-hero">
-              <div className="editorial-hero-left">
-                <span className="eyebrow">
-                  Healthcare, Technologies and Digital Sovereign EHR
-                </span>
-                <h1 className="headline-xl">
-                  A Singular <span className="text-highlight">Architecture</span>
-                </h1>
-                <p className="editorial-lead">
-                  Sanjeevni is an enterprise healthcare platform uniting <strong className="text-white">cryptographically verified records</strong>, clinician-validated <span className="keyword-pill">AI extraction</span>, and <strong className="text-white">immutable blockchain auditability</strong>.
-                </p>
+      {/* ─── LOGIN MODAL / FULL-SCREEN LOGIN WHEN LOGGED OUT ─── */}
+      {(!isLoggedIn || showLoginModal) && (
+        <div style={{
+          position: !isLoggedIn ? 'static' : 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: !isLoggedIn ? 'auto' : '100%',
+          background: !isLoggedIn ? 'transparent' : 'rgba(0, 0, 0, 0.92)',
+          backdropFilter: !isLoggedIn ? 'none' : 'blur(10px)',
+          zIndex: 1000,
+          overflowY: 'auto',
+          paddingTop: !isLoggedIn ? '20px' : '60px',
+          paddingBottom: '80px'
+        }}>
+          {isLoggedIn && (
+            <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 20px', display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => setShowLoginModal(false)}
+                style={{
+                  background: '#111111',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-pill)',
+                  color: '#ffffff',
+                  padding: '8px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  cursor: 'pointer'
+                }}
+              >
+                <X size={16} />
+                <span>Close Portal</span>
+              </button>
+            </div>
+          )}
 
-                <div className="telemetry-strip">
-                  <div className="telemetry-item">
-                    <span className="dot dot-green" />
-                    <span>Continuous Hash Chain</span>
-                  </div>
-                  <div className="telemetry-item">
-                    <span className="dot dot-green" />
-                    <span>Zero Cross-Patient Leakage</span>
-                  </div>
-                  <div className="telemetry-item">
-                    <span>FHIR R4B Certified</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="editorial-hero-right">
-                <p className="editorial-body">
-                  We combine <strong className="text-white">cryptographic rigor</strong>, <strong className="text-white">FHIR R4B clinical standards</strong>, and <strong className="text-white">artificial intelligence</strong> to deliver absolute data integrity. From life-critical emergency admissions to selective patient consent, every record state mutation is <span className="text-highlight">permanently anchored</span> in the ledger.
-                </p>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  <div className="highlight-box">
-                    <strong>Our Mission</strong>
-                    <span>Converge clinical intelligence with blockchain sovereignty to <b>eliminate healthcare record falsification</b>.</span>
-                  </div>
-                  <div className="highlight-box">
-                    <strong>Our Singularity</strong>
-                    <span>Continuous SHA-256 hash chaining paired with strict RBAC boundary walls ensuring <b>zero cross-patient data leakage</b>.</span>
-                  </div>
-                  <div className="highlight-box">
-                    <strong>Our Expertise</strong>
-                    <span><b>Structure, verify, deploy.</b></span>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap', marginTop: '10px' }}>
-                  <button
-                    className="btn btn-primary btn-lg"
-                    onClick={() => setActiveTab('patients')}
-                  >
-                    <span>↘ Explore Patient Records</span>
-                  </button>
-                  <button
-                    className="btn btn-secondary btn-lg"
-                    onClick={() => setActiveTab('ledger')}
-                  >
-                    <span>→ Inspect Ledger Chain</span>
-                  </button>
-                </div>
-              </div>
-            </section>
-
-            {/* 2. Concrete Cases Section (Matching bb-b.net Images 2 & 3: DES CAS CONCRETS) */}
-            <section style={{ marginBottom: '80px' }}>
-              <div className="section-header">
-                <span className="section-eyebrow">Deployed Capabilities</span>
-                <h2 className="section-title">Concrete Clinical Cases</h2>
-                <p className="section-desc">
-                  Explore real-world hospital workflows spanning emergency trauma break-glass, AI document ingestion, and sovereign cryptographic data anchoring.
-                </p>
-              </div>
-
-              <div className="editorial-case-grid">
-                
-                {/* Case 1: ZONEGREEN Style Split Card (Emergency Break-Glass) */}
-                <div className="editorial-split-card">
-                  <div className="editorial-card-content">
-                    <span className="eyebrow" style={{ color: 'var(--accent-red)' }}>
-                      Critical Care Protocol
-                    </span>
-                    <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
-                      Emergency Break-Glass Access
-                    </h3>
-                    <p className="editorial-body">
-                      Enables emergency physicians to override standard patient consent when treating unconscious trauma victims. All accesses trigger an unforgeable forensic audit event linked directly to police FIR databases while redacting non-essential psychiatric history.
-                    </p>
-                    <div>
-                      <button 
-                        className="btn-arrow" 
-                        onClick={() => setActiveTab('emergency')}
-                      >
-                        <span>→ Launch Emergency Protocol</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="editorial-card-visual">
-                    <Ambulance size={64} color="var(--text-secondary)" style={{ opacity: 0.4, marginBottom: '16px' }} />
-                    <div style={{ textAlign: 'center' }}>
-                      <span className="badge badge-red" style={{ fontSize: '0.72rem' }}>Audit Warning Active</span>
-                      <div className="mono text-xs" style={{ color: 'var(--text-tertiary)', marginTop: '8px' }}>
-                        Ref: PROTOCOL-BG-2026
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Case 2: BINDER MAGNETIC Style Split Card (Integrity Ledger) */}
-                <div className="editorial-split-card">
-                  <div className="editorial-card-content">
-                    <span className="eyebrow">
-                      Cryptographic Infrastructure
-                    </span>
-                    <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
-                      Continuous Blockchain Ledger
-                    </h3>
-                    <p className="editorial-body">
-                      Every diagnostic finding, prescribed medication, and anchored lab observation is sealed inside a continuous SHA-256 block digest. Direct out-of-band SQL modifications are identified and flagged within milliseconds.
-                    </p>
-                    <div>
-                      <button 
-                        className="btn-arrow" 
-                        onClick={() => setActiveTab('ledger')}
-                      >
-                        <span>→ Inspect Cryptographic Ledger</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="editorial-card-visual">
-                    <Link2 size={64} color="var(--text-secondary)" style={{ opacity: 0.4, marginBottom: '16px' }} />
-                    <div style={{ textAlign: 'center' }}>
-                      <span className="badge badge-green" style={{ fontSize: '0.72rem' }}>Chain Continuous</span>
-                      <div className="mono text-xs" style={{ color: 'var(--text-tertiary)', marginTop: '8px' }}>
-                        4 Blocks Verified • 0 Tamper Detected
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </section>
-          </div>
-        )}
-
-        {/* ─── DEDICATED CLINICAL WORK VIEWS (Zero clutter, full breathing room) ─── */}
-        {activeTab === 'patients' && (
-          <PatientEHRView
-            patients={patients}
-            activeMrn={activeMrn}
-            onSelectPatient={handleSelectPatient}
-            patientDetails={patientDetails}
-            loading={loadingPatient}
-            onTamper={handleTamper}
-            onRestore={handleRestore}
-            role={user?.role}
+          <RoleLoginView 
+            onLoginSuccess={handleLoginSuccess}
+            currentRole={user?.role}
           />
-        )}
+        </div>
+      )}
 
-        {activeTab === 'case_sheet' && (
-          <CaseSheetView
-            activeMrn={activeMrn}
-            user={user}
-          />
-        )}
+      {/* ─── MAIN PROTECTED CONTENT (Only rendered when logged in) ─── */}
+      {isLoggedIn && (
+        <main className="animate-fade-in" key={`${activeTab}-${user?.role}`} style={{ marginTop: '20px' }}>
+          
+          {/* ─── DEDICATED ROLE-BASED DASHBOARD (Distinct for Doctor, Patient, Admin, Auditor, Police) ─── */}
+          {activeTab === 'overview' && (
+            <RoleDashboardView
+              user={user}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+              patients={patients}
+              activeMrn={activeMrn}
+              onSelectPatient={handleSelectPatient}
+              ledgerHealth={ledgerHealth}
+              auditSummary={auditSummary}
+            />
+          )}
 
-        {activeTab === 'consent' && (
-          <ConsentSharingView
-            user={user}
-          />
-        )}
+          {/* ─── PATIENT RECORDS VIEW (Scoped: Patients see only own MRN) ─── */}
+          {activeTab === 'patients' && (
+            <PatientEHRView
+              patients={user?.role === 'Patient' ? patients.filter(p => p.mrn === user?.patient_mrn) : patients}
+              activeMrn={user?.role === 'Patient' ? (user?.patient_mrn || activeMrn) : activeMrn}
+              onSelectPatient={handleSelectPatient}
+              patientDetails={patientDetails}
+              loading={loadingPatient}
+              onTamper={handleTamper}
+              onRestore={handleRestore}
+              role={user?.role}
+            />
+          )}
 
-        {activeTab === 'emergency' && (
-          <EmergencyPoliceView
-            user={user}
-          />
-        )}
+          {/* ─── CLINICAL CASE SHEET BUILDER (Doctor Only) ─── */}
+          {activeTab === 'case_sheet' && (
+            <CaseSheetView
+              activeMrn={activeMrn}
+              user={user}
+            />
+          )}
 
-        {activeTab === 'extract' && (
-          <AIExtractionView
-            onApproveSuccess={() => {
-              fetchAllData();
-              fetchPatientDetails(activeMrn);
-            }}
-            role={user?.role}
-          />
-        )}
+          {/* ─── CONSENT & ACCESS TOKEN SHARING ─── */}
+          {activeTab === 'consent' && (
+            <ConsentSharingView
+              user={user}
+            />
+          )}
 
-        {activeTab === 'rag' && (
-          <RAGAssistantView
-            role={user?.role}
-            userMrn={user?.patient_mrn}
-          />
-        )}
+          {/* ─── EMERGENCY BREAK-GLASS & POLICE DOSSIER ─── */}
+          {activeTab === 'emergency' && (
+            <EmergencyPoliceView
+              user={user}
+            />
+          )}
 
-        {activeTab === 'ledger' && (
-          <LedgerExplorerView
-            blocks={ledgerBlocks}
-            chainHealth={ledgerHealth}
-            onRefreshLedger={() => fetchAllData()}
-            isRefreshing={isRefreshing}
-          />
-        )}
+          {/* ─── AI CLINICAL EXTRACTION & REVIEW (Doctor / Clinician) ─── */}
+          {activeTab === 'extract' && (
+            <AIExtractionView
+              onApproveSuccess={() => {
+                fetchAllData();
+                fetchPatientDetails(activeMrn);
+              }}
+              role={user?.role}
+            />
+          )}
 
-        {activeTab === 'audit' && (
-          <AuditLogView
-            logs={auditLogs}
-            onRefreshLogs={() => fetchAllData()}
-            totalRecords={auditSummary.total}
-            securityFlagsCount={auditSummary.flags}
-            role={user?.role}
-          />
-        )}
+          {/* ─── SCOPED CLINICAL RAG ASSISTANT (Zero cross-patient leakage) ─── */}
+          {activeTab === 'rag' && (
+            <RAGAssistantView
+              role={user?.role}
+              userMrn={user?.patient_mrn}
+            />
+          )}
 
-      </main>
+          {/* ─── CRYPTOGRAPHIC LEDGER EXPLORER ─── */}
+          {activeTab === 'ledger' && (
+            <LedgerExplorerView
+              blocks={ledgerBlocks}
+              chainHealth={ledgerHealth}
+              onRefreshLedger={() => fetchAllData()}
+              isRefreshing={isRefreshing}
+            />
+          )}
 
-      {/* ─── Editorial Minimal Footer (bb-b.net style) ─── */}
+          {/* ─── FORENSIC AUDIT LOG TRAIL ─── */}
+          {activeTab === 'audit' && (
+            <AuditLogView
+              logs={auditLogs}
+              onRefreshLogs={() => fetchAllData()}
+              totalRecords={auditSummary.total}
+              securityFlagsCount={auditSummary.flags}
+              role={user?.role}
+            />
+          )}
+
+        </main>
+      )}
+
+      {/* ─── Editorial Minimal Footer ─── */}
       <footer style={{
         marginTop: '100px',
         paddingTop: '36px',
@@ -574,14 +523,18 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#ffffff' }}>sanjeevni</span>
           <span style={{ fontSize: '0.82rem', color: 'var(--text-tertiary)' }}>
-            © 2026 Sovereign Healthcare Architecture. All rights reserved.
+            © 2026 Sovereign Healthcare Architecture. Role: <strong className="text-white">{user?.role}</strong> ({user?.full_name}).
           </span>
         </div>
         <div style={{ display: 'flex', gap: '28px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-          <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('overview')}>Overview</span>
-          <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('patients')}>Patients</span>
-          <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('ledger')}>Cryptographic Ledger</span>
-          <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('audit')}>Forensic Trail</span>
+          <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('overview')}>Dashboard</span>
+          {user?.role !== 'PoliceEmergency' && (
+            <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('patients')}>
+              {user?.role === 'Patient' ? 'My Health' : 'Patients'}
+            </span>
+          )}
+          <span style={{ cursor: 'pointer' }} onClick={() => setActiveTab('consent')}>Consent</span>
+          <span style={{ cursor: 'pointer' }} onClick={() => setShowLoginModal(true)}>Switch Role</span>
         </div>
       </footer>
 
